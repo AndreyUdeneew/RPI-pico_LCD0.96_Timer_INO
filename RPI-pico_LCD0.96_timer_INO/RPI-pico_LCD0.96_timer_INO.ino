@@ -30,9 +30,14 @@ void setup() {
   tft.fillScreen(ST77XX_BLACK);
   tft.setTextColor(ST77XX_WHITE);
   tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-  tft.setCursor(5, 5);
-  tft.setTextSize(5);
-  tft.print("TEST!");
+  tft.setCursor(15, 5);
+  tft.setTextSize(2);
+  tft.print("TIMER STOP");
+  tft.setCursor(22, 35);
+  tft.setTextSize(4);
+  tft.print("00");
+  tft.print(":");
+  tft.print("00");
 
 
   pinMode(2, INPUT_PULLUP);  //The sketch works only when pinmodes are after the tft init... подключаем тактовые кнопки
@@ -59,10 +64,12 @@ void loop() {
       MIN = MIN - 1;
       SEC = 0;
       if (MIN < 0) { MIN = 0; }
-      tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-      tft.setCursor(0, 0);
+      // tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
+      tft.setTextSize(2);
+      tft.setCursor(15, 5);
       tft.print("TIMER STOP");
-      tft.setCursor(5, 0);
+      tft.setTextSize(4);
+      tft.setCursor(22, 35);
       tft.print(MIN);
       tft.print(" : ");
       tft.print(SEC);
@@ -77,10 +84,12 @@ void loop() {
     if (!button2IsUp) {
       MIN = MIN + 1;
       SEC = 0;
-      tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-      tft.setCursor(0, 0);
+      // tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
+      tft.setTextSize(2);
+      tft.setCursor(15, 5);
       tft.print("TIMER STOP");
-      tft.setCursor(5, 0);
+      tft.setTextSize(4);
+      tft.setCursor(22, 35);
       tft.print(MIN);
       tft.print(" : ");
       tft.print(SEC);
@@ -92,13 +101,14 @@ void loop() {
   if (button3WasUp && !button3IsUp && MIN > 0) {
     delay(ButtonDebounce);
     button3IsUp = digitalRead(6);
+    tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
     if (!button3IsUp) {
       if (SEC == 0) {
         SEC = 60;
         MIN = MIN - 1;
       }
       if (MIN < 0) { MIN = 0; }
-      digitalWrite(10, LOW);
+      digitalWrite(6, LOW);
       w = 1;
     }
   }
@@ -108,13 +118,16 @@ void loop() {
   if (button4WasUp && !button4IsUp) {
     delay(ButtonDebounce);
     button4IsUp = digitalRead(5);
+    tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
     if (!button4IsUp) {
       MIN = 0;
       SEC = 0;
       tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-      tft.setCursor(0, 0);
+      tft.setTextSize(2);
+      tft.setCursor(15, 5);
       tft.print("TIMER STOP");
-      tft.setCursor(5, 1);
+      tft.setTextSize(4);
+      tft.setCursor(22, 35);
       tft.print(MIN);
       tft.print(" : ");
       tft.print(SEC);
@@ -131,14 +144,16 @@ void loop() {
       // если отсчет закончился - включаем сигнал и выходим из цикла
       if (SEC == 0 && MIN == 0) {
         tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-        tft.setCursor(0, 0);
+        tft.setTextSize(2);
+        tft.setCursor(15, 5);
         tft.print("TIMER STOP");
-        tft.setCursor(5, 1);
+        tft.setTextSize(4);
+        tft.setCursor(22, 35);
         tft.print(MIN);
         tft.print(" : ");
         tft.print(SEC);
-        digitalWrite(10, HIGH);
-        tone(12, 100);
+        digitalWrite(6, HIGH);
+        tone(12, 100, 200);
         delay(500);
         noTone(12);
         w = 0;
@@ -153,10 +168,12 @@ void loop() {
 
       // если из цикла while еще не вышли - выводим информацию на дисплей
       if (w == 1) {
-        tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
-        tft.setCursor(2, 0);
+        // tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
+        tft.setTextSize(2);
+        tft.setCursor(15, 5);
         tft.print("TIMER START");
-        tft.setCursor(5, 1);
+        tft.setTextSize(4);
+        tft.setCursor(22, 35);
         tft.print(MIN);
         tft.print(" : ");
         tft.print(SEC);
@@ -165,11 +182,13 @@ void loop() {
 
     // если была нажата третья кнопка, выходим из цикла без обнуления счетчика
     boolean button3IsUp = digitalRead(4);
+    // tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK); // NO NEED!!!!!!!!!!!!!!!!
     if (button3WasUp && !button3IsUp) {
       delay(ButtonDebounce);
       button3IsUp = digitalRead(4);
       if (!button3IsUp) {
-        tft.setCursor(2, 0);
+        tft.setCursor(15, 5);
+        tft.setTextSize(2);
         tft.print("TIMER  STOP");
         w = 0;
       }
