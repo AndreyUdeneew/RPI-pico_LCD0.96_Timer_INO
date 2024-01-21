@@ -69,9 +69,10 @@ void loop() {
       tft.setCursor(15, 5);
       tft.print("TIMER STOP");
       tft.setTextSize(4);
+      tft.fillRoundRect(20, 34, 160, 80, 0, ST77XX_BLACK);
       tft.setCursor(22, 35);
       tft.print(MIN);
-      tft.print(" : ");
+      tft.print(":");
       tft.print(SEC);
     }
   }
@@ -89,9 +90,10 @@ void loop() {
       tft.setCursor(15, 5);
       tft.print("TIMER STOP");
       tft.setTextSize(4);
+      tft.fillRoundRect(20, 34, 160, 80, 0, ST77XX_BLACK);
       tft.setCursor(22, 35);
       tft.print(MIN);
-      tft.print(" : ");
+      tft.print(":");
       tft.print(SEC);
     }
   }
@@ -117,19 +119,19 @@ void loop() {
   // при нажатии на четвертую кнопку обнуляем счетчик и включаем светодиод
   if (button4WasUp && !button4IsUp) {
     delay(ButtonDebounce);
-    button4IsUp = digitalRead(5);
-    tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
+    button4IsUp = digitalRead(5);    
     if (!button4IsUp) {
       MIN = 0;
       SEC = 0;
-      tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
+      tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
       tft.setTextSize(2);
       tft.setCursor(15, 5);
       tft.print("TIMER STOP");
       tft.setTextSize(4);
+      tft.fillRoundRect(20, 34, 160, 80, 0, ST77XX_BLACK);
       tft.setCursor(22, 35);
       tft.print(MIN);
-      tft.print(" : ");
+      tft.print(":");
       tft.print(SEC);
     }
   }
@@ -145,12 +147,14 @@ void loop() {
       if (SEC == 0 && MIN == 0) {
         tft.fillRoundRect(0, 0, 100, 40, 0, ST77XX_BLACK);
         tft.setTextSize(2);
+        tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
         tft.setCursor(15, 5);
         tft.print("TIMER STOP");
         tft.setTextSize(4);
+        tft.fillRoundRect(20, 34, 160, 80, 0, ST77XX_BLACK);
         tft.setCursor(22, 35);
         tft.print(MIN);
-        tft.print(" : ");
+        tft.print(":");
         tft.print(SEC);
         digitalWrite(6, HIGH);
         tone(12, 100, 200);
@@ -173,20 +177,21 @@ void loop() {
         tft.setCursor(15, 5);
         tft.print("TIMER START");
         tft.setTextSize(4);
+        tft.fillRoundRect(20, 34, 160, 80, 0, ST77XX_BLACK);
         tft.setCursor(22, 35);
         tft.print(MIN);
-        tft.print(" : ");
+        tft.print(":");
         tft.print(SEC);
       }
     }
 
     // если была нажата третья кнопка, выходим из цикла без обнуления счетчика
     boolean button3IsUp = digitalRead(4);
-    // tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK); // NO NEED!!!!!!!!!!!!!!!!
     if (button3WasUp && !button3IsUp) {
       delay(ButtonDebounce);
       button3IsUp = digitalRead(4);
       if (!button3IsUp) {
+        tft.fillRoundRect(0, 0, 160, 32, 0, ST77XX_BLACK);
         tft.setCursor(15, 5);
         tft.setTextSize(2);
         tft.print("TIMER  STOP");
